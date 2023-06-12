@@ -27,6 +27,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-	void OnQuit();
+	void OnQuitAction();
+	void OnFullscreenAction();
 	
 };

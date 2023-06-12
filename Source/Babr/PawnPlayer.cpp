@@ -3,6 +3,8 @@
 
 #include "PawnPlayer.h"
 
+#include "GameFramework/GameUserSettings.h"
+
 // Sets default values
 APawnPlayer::APawnPlayer()
 {
@@ -30,13 +32,28 @@ void APawnPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAction(TEXT("Quit"), IE_Released, this, &APawnPlayer::OnQuit);
+	PlayerInputComponent->BindAction(TEXT("Quit"), IE_Released, this, &APawnPlayer::OnQuitAction);
+	PlayerInputComponent->BindAction(TEXT("Fullscreen"), IE_Pressed, this, &APawnPlayer::OnFullscreenAction);
 
 }
 
-void APawnPlayer::OnQuit()
+void APawnPlayer::OnQuitAction()
 {
 	FGenericPlatformMisc::RequestExit(false);
+}
+
+void APawnPlayer::OnFullscreenAction()
+{
+	UGameUserSettings* GameSetting = GEngine->GameUserSettings; 
+	const EWindowMode::Type CurrentState = GameSetting->GetFullscreenMode();
+	if (CurrentState == EWindowMode::Type::Windowed)
+	{
+		GameSetting->SetFullscreenMode(EWindowMode::Type::WindowedFullscreen);
+	}
+	else
+	{
+		GameSetting->SetFullscreenMode(EWindowMode::Type::Windowed);
+	}
 }
 
 
