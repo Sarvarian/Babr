@@ -26,8 +26,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float MoveSpeed = 100;
+	
 private:
 	void OnQuitAction();
 	void OnFullscreenAction();
+	void OnMoveRightAxis(float Value);
+	void OnMoveUpAxis(float Value);
 	
 };
