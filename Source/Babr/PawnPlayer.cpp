@@ -30,5 +30,14 @@ void APawnPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAction(TEXT("Quit"), IE_Released, this, &APawnPlayer::OnQuit);
+
 }
+
+void APawnPlayer::OnQuit()
+{
+	FGenericPlatformMisc::RequestExit(false);
+}
+
+
 
