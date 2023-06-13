@@ -25,20 +25,13 @@ void APawnCharacter::BeginPlay()
 }
 
 // Called every frame
-void APawnCharacter::Tick(float DeltaTime)
+void APawnCharacter::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	FVector MovementVector = ConsumeMovementInputVector();
-	if (MovementVector.SizeSquared() > 1.0f)
-	{
-		MovementVector.Normalize(1.0f);
-	}
-	// UE_LOG(LogTemp, Display, TEXT("X: %f, Y: %f, Z: %f"), MovementVector.X, MovementVector.Y, MovementVector.Z);
 
-	AddActorLocalOffset(DeltaTime * MovementVector * MoveSpeed, true);
+	const FVector MoveVec = ProcessMovement(DeltaTime);
 
-	if (IsMoving(MovementVector))
+	if (IsMoving(MoveVec))
 	{
 		Sprite->SetRelativeLocation(FVector(0.0f, 0.0f, 1.0f));
 	}
@@ -52,5 +45,16 @@ void APawnCharacter::Tick(float DeltaTime)
 bool APawnCharacter::IsMoving(const FVector MoveVector)
 {
 	return MoveVector.X != 0 || MoveVector.Y != 0;
+}
+
+FVector APawnCharacter::ProcessMovement(const float DeltaTime)
+{
+	FVector MovementVector = ConsumeMovementInputVector();
+	if (MovementVector.SizeSquared() > 1.0f)
+	{
+		MovementVector.Normalize(1.0f);
+	}
+	AddActorLocalOffset(DeltaTime * MovementVector * MoveSpeed, true);
+	return MovementVector;
 }
 

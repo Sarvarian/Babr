@@ -31,5 +31,8 @@ protected:
 	class UPaperSpriteComponent* Sprite;
 	
 	static bool IsMoving(FVector MoveVector);
+
+private:
+	FVector ProcessMovement(float DeltaTime);
 	
 };
