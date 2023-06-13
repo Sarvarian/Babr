@@ -24,7 +24,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float MoveSpeed = 100;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	class UPaperSpriteComponent* Sprite;
+	
+	static bool IsMoving(FVector MoveVector);
+	
 };
