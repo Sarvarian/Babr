@@ -3,18 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PawnCharacter.h"
 #include "GameFramework/Pawn.h"
-#include "PawnPlayer.generated.h"
+#include "PawnCharacter.generated.h"
 
 UCLASS()
-class BABR_API APawnPlayer : public APawnCharacter
+class BABR_API APawnCharacter : public APawn
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
-	APawnPlayer();
+	APawnCharacter();
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,13 +23,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
-private:
-	void OnQuitAction();
-	void OnFullscreenAction();
-	void OnMoveRightAxis(float Value);
-	void OnMoveUpAxis(float Value);
-	
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float MoveSpeed = 100;
+
 };
