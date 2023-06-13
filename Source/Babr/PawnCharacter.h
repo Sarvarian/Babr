@@ -28,6 +28,9 @@ protected:
 	float MoveSpeed = 100;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	class UCapsuleComponent* Collision;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UPaperSpriteComponent* Sprite;
 	
 	static bool IsMoving(FVector MoveVector);

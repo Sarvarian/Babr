@@ -2,6 +2,7 @@
 
 #include "PawnCharacter.h"
 
+#include "Components/CapsuleComponent.h"
 #include "Paper2D/Classes/PaperSpriteComponent.h"
 
 // Sets default values
@@ -10,10 +11,25 @@ APawnCharacter::APawnCharacter()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	// RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+
+	Collision = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collision"));
+	// Collision->SetupAttachment(RootComponent);
+	RootComponent = Collision;
+	Collision->SetCapsuleRadius(5.0f);
+	Collision->SetCapsuleHalfHeight(7.0f);
+	Collision->SetCollisionObjectType(ECC_Pawn);
+	Collision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	Collision->SetCollisionResponseToAllChannels(ECR_Block);
+	Collision->SetGenerateOverlapEvents(true);
+	Collision->SetCollisionProfileName(TEXT("Pawn"));
 	
 	Sprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Sprite"));
 	Sprite->SetupAttachment(RootComponent);
+	Sprite->SetCollisionObjectType(ECollisionChannel::ECC_Visibility);
+	Sprite->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	SetActorEnableCollision(true);
 	
 }
 
